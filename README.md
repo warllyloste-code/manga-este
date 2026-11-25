@@ -1,20 +1,27 @@
 # MANGÁ ESTE
 
-Plataforma para publicação e leitura de mangás autorais, com painel administrativo e suporte planejado a vendas por PIX.
+Plataforma de mangás autorais em desenvolvimento, com leitura online, painel de publicação e loja com pagamento PIX.
 
-## Estado atual
+## Situação
+O repositório contém a documentação inicial. O pacote de aplicação completo está sendo preparado separadamente; o site ainda não está publicado nem validado em produção.
 
-Este repositório foi criado e contém a apresentação do projeto. O pacote inicial completo está disponível separadamente nesta conversa como `manga-este-projeto-gratis.zip`; ele ainda não foi importado para este repositório.
-
-A aplicação ainda não está publicada. Antes do lançamento, é necessário importar o código, configurar as variáveis de ambiente do Supabase e da Cloudflare, executar instalação e build, corrigir eventuais erros e testar autenticação, leitura, painel e pagamentos.
-
-## Stack planejada
-
+## Tecnologias planejadas
 - Next.js
-- Supabase (autenticação e banco de dados)
-- Cloudflare Workers com OpenNext
-- Armazenamento de imagens compatível com Cloudflare R2 ou Supabase Storage
+- Supabase (autenticação, banco e armazenamento)
+- Cloudflare Workers / OpenNext
+- Mercado Pago para PIX (pode haver taxas por transação)
 
-## Importante
+## Configuração do pacote
+1. Extraia o ZIP do projeto e copie o conteúdo da pasta `manga-este/` para a raiz deste repositório.
+2. Instale Node.js 20+ e execute `npm install`.
+3. Copie `.env.example` para `.env.local` e preencha as credenciais no ambiente local.
+4. Crie o projeto Supabase e execute `supabase/schema.sql` no SQL Editor.
+5. Crie sua conta no site e promova somente seu usuário a administrador usando o SQL Editor:
+   `update public.profiles set role='admin' where id=(select id from auth.users where email='SEU_EMAIL');`
+6. Configure Cloudflare e os segredos com Wrangler; nunca coloque chaves secretas no GitHub.
+7. Execute `npm run cf:preview`, teste e só então `npm run cf:deploy`.
 
-O projeto está em desenvolvimento. Não há promessa de hospedagem ilimitada ou gratuita para sempre; os serviços gratuitos possuem limites e podem mudar suas condições.
+## Limitações atuais
+Ainda faltam testes completos, histórico/progresso sincronizados, notificações, moderação, recuperação de conta, gestão de produtos e entrega protegida de compras. O pacote inicial não deve ser tratado como produto final de produção. Os planos gratuitos possuem limites e podem mudar.
+
+Consulte `SECURITY.md` antes de configurar credenciais ou receber pagamentos.
